@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import './App.css';
 import api from "./api/pokemon";
+import PokemonCard from "./components/PokemonCard";
 
 function App() {
 
@@ -27,34 +28,19 @@ function App() {
 		fetchPokemon();
 	}, []);
 
-  // const fetchPokemon = async () => {
-  //   const response = await fetch(loadMore);
-  //   const data = await response.json();
-    
-  //   setLoadMore(response.next);
-    
-  //   function createPokemonCard (result) {
-  //     result.forEach(async (pokemon) => {
-  //       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`)
-  //       const data = await response.json();
-
-  //       setPokemon(currentPokemon => [...currentPokemon, response])
-
-  //       console.log(pokemon);
-  //     })
-  //   }
-  //   createPokemonCard(response.results)
-  // };
-
-  // useEffect(() => {
-	// 	fetchPokemon();
-	// }, []);
-
   return (
     <div className="App">
       <header className="App-header">
         <h1>PokeTools</h1>
-        
+          <div>
+            {allPokemon.map((pokemon, index) => 
+            <PokemonCard
+            id={pokemon.id}
+            name={pokemon.name}
+            image={pokemon.sprites.front_default}
+            key={index}
+             />)}
+          </div>
       </header>
     </div>
   );
