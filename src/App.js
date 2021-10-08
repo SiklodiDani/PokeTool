@@ -9,18 +9,20 @@ function App() {
   const [loadMore, setLoadMore] = useState('https://pokeapi.co/api/v2/pokemon');
 
   const fetchPokemon = async () => {
-    const response = await api.get("/pokemon");
-    
-    setLoadMore(response.data.next);
-    
+    const res = await fetch(loadMore);
+    const data = await res.json();
+
+    setLoadMore(data.next);
+
     function createPokemonCard (result) {
       result.forEach(async (pokemon) => {
-        const response = await api.get(`/pokemon/${pokemon.name}`);
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
+        const data = await res.json();
 
-        setAllPokemon(currentPokemon => [...currentPokemon, response.data]);
+        setAllPokemon(currentPokemon => [...currentPokemon, data]);
       })
     }
-    createPokemonCard(response.data.results);
+    createPokemonCard(data.results);
     
   };
 
@@ -41,6 +43,7 @@ function App() {
             key={index}
              />)}
           </div>
+          <button onClick={() => fetchPokemon()} >Load More</button>
       </header>
     </div>
   );
