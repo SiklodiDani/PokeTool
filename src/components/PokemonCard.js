@@ -5,21 +5,22 @@ import "./PokemonCard.css";
 const PokemonCard = ({ id, name, image, types}) => {
 	const colors = {
 		normal: '#d1d1d1',
-		water: '#cdeaff',
-		grass: '#c7ffc5',
-		fire: '#ffbfb4',
+		water: '#81D4FA',
+		grass: '#70d968',
+		fire: '#f2bc5e',
 		fighting: '#b69180',
-		flying: '#aec0e2',
-		poison: '#bb9bc9',
+		flying: '#9FA8DA',
+		poison: '#b87ce6',
 		ground: '#ebe290',
 		rock: 'rgb(172, 159, 106)',
-		bug: 'rgb(193, 212, 123)',
+		bug: '#D4E157',
 		ghost: 'rgb(146, 136, 204)',
-		electric: 'rgb(255, 255, 130)',
+		electric: '#FFEE58',
 		psychic: '#d18ad4',
 		ice: '#97fffa',
-		dark: '#7a5e47',
+		dark: '#57586b',
 		steel: '#c6d5df',
+		dragon: '#cca6ff',
 		fairy: 'rgb(253, 184, 255)'
 	}
 
@@ -36,7 +37,7 @@ const PokemonCard = ({ id, name, image, types}) => {
 	return (
 		<div className="pokemon"
 			style={{
-				backgroundImage: `linear-gradient(61deg, ${colors[style0]} 50%, ${colors[style1]} 50%)`
+				backgroundImage: `linear-gradient(61deg, ${colors[style0]} 49%, ${colors[style1]} 51%)`
 			}}>
 			<div className="img-container">
 				<img src={image} alt={name} />
