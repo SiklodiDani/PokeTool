@@ -6,6 +6,7 @@ function App() {
 	const [allPokemon, setAllPokemon] = useState([]);
 	const [loadMore, setLoadMore] = useState("https://pokeapi.co/api/v2/pokemon");
 
+
 	const fetchPokemon = async () => {
 		const res = await fetch(loadMore);
 		const data = await res.json();
@@ -34,16 +35,18 @@ function App() {
 			<header className="App-header">
 				<h1>PokeTools</h1>
 				<div className="pokemon-container">
-					{allPokemon.map((pokemon, index) => (
+					{allPokemon.map((pokemon) => (	
 						<PokemonCard
 							id={pokemon.id}
 							name={pokemon.name}
 							image={`https://cdn.traction.one/pokedex/pokemon/${pokemon.id}.png`}
-              type={pokemon.type}
-							key={index}
+							type1={pokemon.types[0].type.name}
+              				types={pokemon.types}
+							key={pokemon.id}
 						/>
 					))}
 				</div>
+
 				<button onClick={() => fetchPokemon()}>Load More</button>
 			</header>
 		</div>
