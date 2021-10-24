@@ -40,7 +40,6 @@ function App() {
 							id={pokemon.id}
 							name={pokemon.name}
 							image={`https://cdn.traction.one/pokedex/pokemon/${pokemon.id}.png`}
-							type1={pokemon.types[0].type.name}
               				types={pokemon.types}
 							key={pokemon.id}
 						/>
