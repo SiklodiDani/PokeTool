@@ -47,7 +47,7 @@ const PokemonCard = ({ id, name, image, types}) => {
 				<h3 className="name">{name}</h3>
 				{types.map((type, i) => (
 					<img
-						src={`../typeIcons/${types[i].type.name}.png`}
+						src={`../typeIcons/${type.type.name}.png`}
 						style={{
 							width: "30px",
 							height: "30px",
