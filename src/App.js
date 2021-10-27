@@ -4,19 +4,18 @@ import PokemonCard from "./components/PokemonCard";
 
 function App() {
 	const [allPokemon, setAllPokemon] = useState([]);
-	const [loadMore, setLoadMore] = useState(
-		"https://pokeapi.co/api/v2/pokemon?limit=5"
-	);
+	const [loadMore, setLoadMore] = useState("https://pokeapi.co/api/v2/pokemon?offset=0&limit=100");
 	const [type, setType] = useState("all");
+	const [filter, setFilter] = useState("");
+
+	const searchHandler = (e) => {
+		setFilter(e.target.value);
+	}
 
 	const typeHandler = (e) => {
-		setType(e.target.value)
-		if (e.target.value === "all") {
-			setLoadMore("https://pokeapi.co/api/v2/pokemon?offset=0&limit=5");
-		} else {
-			setLoadMore("https://pokeapi.co/api/v2/pokemon?offset=0&limit=100");
-		}
-		setAllPokemon([]);
+		setType(e.target.value);
+		setLoadMore("https://pokeapi.co/api/v2/pokemon?offset=0&limit=100");
+		allPokemon.length = 0;
 	};
 	
 	const fetchPokemon = async () => {
@@ -52,31 +51,35 @@ function App() {
 		<div className="App">
 			<header className="App-header">
 				<h1>PokeTools</h1>
-				<select onChange={typeHandler}>
-					<option value="all">All</option>
-					<option value="normal">Normal</option>
-					<option value="fighting">Fighting</option>
-					<option value="flying">Flying</option>
-					<option value="poison">Poison</option>
-					<option value="ground">Ground</option>
-					<option value="rock">Rock</option>
-					<option value="bug">Bug</option>
-					<option value="ghost">Ghost</option>
-					<option value="steel">Steel</option>
-					<option value="fire">Fire</option>
-					<option value="water">Water</option>
-					<option value="grass">Grass</option>
-					<option value="electric">Electric</option>
-					<option value="psychic">Psychic</option>
-					<option value="ice">Ice</option>
-					<option value="dragon">Dragon</option>
-					<option value="dark">Dark</option>
-					<option value="fairy">Fairy</option>
-				</select>
+				<div>
+					<input value={filter} onChange={searchHandler} type="text" />
+					<select onChange={typeHandler}>
+						<option value="all">All</option>
+						<option value="normal">Normal</option>
+						<option value="fighting">Fighting</option>
+						<option value="flying">Flying</option>
+						<option value="poison">Poison</option>
+						<option value="ground">Ground</option>
+						<option value="rock">Rock</option>
+						<option value="bug">Bug</option>
+						<option value="ghost">Ghost</option>
+						<option value="steel">Steel</option>
+						<option value="fire">Fire</option>
+						<option value="water">Water</option>
+						<option value="grass">Grass</option>
+						<option value="electric">Electric</option>
+						<option value="psychic">Psychic</option>
+						<option value="ice">Ice</option>
+						<option value="dragon">Dragon</option>
+						<option value="dark">Dark</option>
+						<option value="fairy">Fairy</option>
+					</select>
+				</div>
 				<div className="pokemon-container">
 					{allPokemon
 						.sort((a, b) => (a.id > b.id ? 1 : -1))
 						.map((pokemon) => (
+							pokemon.name.includes(filter) && 
 							<PokemonCard
 								id={pokemon.id}
 								name={pokemon.name}
