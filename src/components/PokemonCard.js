@@ -1,8 +1,11 @@
 import React from "react";
+import { useParams, Link } from "react-router-dom";
 import "./PokemonCard.css";
+import "./PokemonPage.js";
 
 
 const PokemonCard = ({ id, name, image, types}) => {
+	
 	const colors = {
 		normal: '#d1d1d1',
 		water: '#81D4FA',
@@ -34,32 +37,41 @@ const PokemonCard = ({ id, name, image, types}) => {
 		style0 = style1 = types[0].type.name;
 	}
 	name = name[0].toUpperCase() + name.slice(1);
+
+	let {page} = useParams();
+
 	return (
-		<div className="pokemon"
-			style={{
-				backgroundImage: `linear-gradient(61deg, ${colors[style0]} 49%, ${colors[style1]} 51%)`
-			}}>
-			<div className="img-container">
-				<img src={image} alt={name} />
-			</div>
-			<div className="info">
-				<span className="id">#{id.toString().padStart(3,'0')}</span>
-				<h3 className="name">{name}</h3>
-				{types.map((type, i) => (
-					<img
-						src={`../typeIcons/${type.type.name}.png`}
-						style={{
-							width: "30px",
-							height: "30px",
-							borderRadius: "50%",
-							margin: types.length > 1 ? "-2.5px" : "0",
-						  }}
-						key={i}
-						alt={types[i].type.name}
-					/>
-				))}
-			</div>
-		</div>
+		<Link to={`/page/${id}`}>
+			<span style={{ display: "block" }}>
+				<div
+					className="pokemon"
+					style={{
+						backgroundImage: `linear-gradient(61deg, ${colors[style0]} 49%, ${colors[style1]} 51%)`,
+					}}
+				>
+					<div className="img-container">
+						<img src={image} alt={name} />
+					</div>
+					<div className="info">
+						<span className="id">#{id.toString().padStart(3, "0")}</span>
+						<h3 className="name">{name}</h3>
+						{types.map((type, i) => (
+							<img
+								src={`../typeIcons/${type.type.name}.png`}
+								style={{
+									width: "30px",
+									height: "30px",
+									borderRadius: "50%",
+									margin: types.length > 1 ? "-2.5px" : "0",
+								}}
+								key={i}
+								alt={types[i].type.name}
+							/>
+						))}
+					</div>
+				</div>
+			</span>
+		</Link>
 	);
 };
 
