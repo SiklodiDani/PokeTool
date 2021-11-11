@@ -1,7 +1,7 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
+import {Link } from "react-router-dom";
 import "./PokemonCard.css";
-import "./PokemonPage.js";
+import "../PokemonPage/PokemonPage.js";
 
 
 const PokemonCard = ({ id, name, image, types}) => {
@@ -37,8 +37,6 @@ const PokemonCard = ({ id, name, image, types}) => {
 		style0 = style1 = types[0].type.name;
 	}
 	name = name[0].toUpperCase() + name.slice(1);
-
-	let {page} = useParams();
 
 	return (
 		<Link to={`/page/${id}`}>

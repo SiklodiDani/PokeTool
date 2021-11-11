@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
-import PokemonCard from "./PokemonCard";
+import PokemonCard from "../PokemonCard/PokemonCard";
 import './PokemonList.css';
-import {BrowserRouter, Route, Link} from "react-router-dom";
 
 function PokemonList() {
 	const [allPokemon, setAllPokemon] = useState([]);
@@ -51,7 +50,6 @@ function PokemonList() {
 	return (
 		<div>
 			<div>
-				<h1>PokeTools</h1>
 				<input value={filter} onChange={searchHandler} type="text" />
 				<select onChange={typeHandler}>
 					<option value="all">All</option>
