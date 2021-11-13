@@ -1,8 +1,8 @@
-.pokemon-container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    margin: 0px;
-  }
-  
+html {
+  background-image: url(../PokemonPage/pageBackground.png);
+  background-size: cover;
+  background-position:center;
+  background-attachment: fixed;
+  height: 100%;
+}
+

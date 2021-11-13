@@ -24,7 +24,7 @@ const PokemonPage = () => {
 
 			//get information about the pokemon cards and populates the array with the url of the images
 			res = await fetch(
-				`https://api.pokemontcg.io/v2/cards?q=name:${data.name}`
+				`https://api.pokemontcg.io/v2/cards?q=name:${data.name}&orderBy=name&sort=Asc`
 			);
 			data = await res.json();
 
@@ -33,7 +33,7 @@ const PokemonPage = () => {
 			});
 		};
 
-		getCards(data);
+		// getCards(data);
 
 		const getEvolutionStage = async (data) => {
 
@@ -172,24 +172,22 @@ const PokemonPage = () => {
 					</div>
 					<h2> Evolutions </h2>
 					<div className="evolutions">
-						{evolution.length > 0 &&
-							evolution.map((stage) => (
+					{evolution.length > 0 &&
+						evolution.map((stage) => (
+							<div>
 								<Link to={`/page/${stage}`}>
 									<img
 										src={`https://cdn.traction.one/pokedex/pokemon/${stage}.png`}
-										style={{
-											width: "100px",
-											height: "{auto}",
-										}}
 									/>
 								</Link>
-							))}
-					</div>
-					<div className="cards-container">
+							</div>
+						))}
+						</div>
+					{/* <div className="cards-container">
 						{cards.map((card, i) => (
 							<img src={card} key={i} alt={" "} />
 						))}
-					</div>
+					</div> */}
 				</>
 			)}
 		</div>

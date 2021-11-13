@@ -1,13 +1,20 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 const Navbar = () => {
+
+    const history = useHistory();
+
+    const handleHistory = () => {
+        history.push("/");
+    }
+
     return (
-        <div>
-            <nav>
-                <NavLink to="/">
-                    <h1>Poképedia</h1>
-                </NavLink>
+        <div style={{backgroundColor: "rgb(51, 142, 247)"}} >
+            <nav >
+                <Link to="/">
+                    <h1 style={{ textAlign: "left" ,color: "white", margin:"0",  paddingBottom: "5px", paddingLeft: "5px"}} onClick={handleHistory}>Poképedia</h1>
+                </Link>
             </nav>
         </div>
     );
