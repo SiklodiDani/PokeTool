@@ -36,7 +36,6 @@ const PokemonCard = ({ id, name, image, types}) => {
 	}else {
 		style0 = style1 = types[0].type.name;
 	}
-	name = name[0].toUpperCase() + name.slice(1);
 
 	return (
 		<Link to={`/page/${id}`}>
@@ -52,7 +51,7 @@ const PokemonCard = ({ id, name, image, types}) => {
 					</div>
 					<div className="info">
 						<span className="id">#{id.toString().padStart(3, "0")}</span>
-						<h3 className="name">{name}</h3>
+						<h3 className="name">{name[0].toUpperCase() + name.slice(1)}</h3>
 						{types.map((type, i) => (
 							<img
 								src={`../typeIcons/${type.type.name}.png`}

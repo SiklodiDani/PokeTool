@@ -3,6 +3,11 @@
     padding:20px;
     margin: 5px;
     text-align: center;
+    transition: transform 250ms;
+}
+
+.pokemon:hover {
+    transform: translateY(-5px);
 }
 
 a, a:hover, a:focus, a:active {
@@ -19,11 +24,12 @@ a, a:hover, a:focus, a:active {
 
 .pokemon .img-container img {
     margin-top: 20px;
-    max-width: 90%;
+    height: 100px;
+    width: auto;
 }
 
 .pokemon .name {
-    color: rgb(56, 63, 60);
+    color: rgb(78, 73, 85);
     margin: 15px 0 7px;
     letter-spacing: 1px;
 }
@@ -37,9 +43,4 @@ a, a:hover, a:focus, a:active {
     border-radius: 10px;
     font-size: 0.8rem;
     padding: 5px 10px;
-}
-
-.pokemon .name {
-    margin: 15px 0 7px;
-    letter-spacing: 1px;
 }

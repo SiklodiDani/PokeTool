@@ -37,8 +37,8 @@ function PokemonList() {
 
 	return (
 		<div className="listBackground">
-			<div>
-				<input value={filter} onChange={searchHandler} type="text" />
+			<div className="search-bar">
+				<input value={filter} onChange={searchHandler} type="text" placeholder="Search..."/>
 			</div>
 			<div className="pokemon-container">
 				{allPokemon
@@ -57,7 +57,7 @@ function PokemonList() {
 							)
 					)}
 			</div>
-			<button onClick={() => fetchPokemon()}>Load More</button>
+			<button className="load-button" onClick={() => fetchPokemon()}>Load More</button>
 		</div>
 	);
 }

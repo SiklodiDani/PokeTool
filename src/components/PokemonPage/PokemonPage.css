@@ -4,11 +4,11 @@
     margin: 10px;
     text-align: center;
     display: inline-block;
+    color: rgb(48, 47, 59);
 }
 
-.page .pokemon {
-    display: flex;
-    grid-template-columns: repeat(3, 1fr);
+.page .pokemon-data {
+    display: inline-flex;
     grid-gap: 1em;
     grid-auto-flow: row;
     align-content: center;
@@ -16,16 +16,20 @@
 }
 
 @media screen and ( max-width: 500px ) { 
-    .page .pokemon { flex-direction: column; }
+    .page .pokemon-data { flex-direction: column; }
   }
 
 .page .stats-container {
     margin: 10px;
 }
 
+.page .pokemon-img-container {
+    display: inline-block;
+}
+
 .page .pokemon-img-container img{
     height: auto;
-    width: 150px;
+    width: 250px;
 }
 
 .page .info {
@@ -58,7 +62,34 @@
     .page .evolutions { flex-direction: column; }
   }
 
+.page .evolutions .stage-img {
+    transition: transform 250ms; 
+}
+
+.page .evolutions .stage-img:hover {
+    transform: translateY(-10px);
+}
+
 .page .evolutions img {
-    height: 150px;
-    width: auto;   
+    height: 100px;
+    width: auto;  
+}
+
+.page table {
+    background-color: rgba(255,255,255,0.3);
+    border-radius: 25px;
+    border-collapse: collapse;
+    overflow: hidden;
+}
+
+.page td {
+    padding: 15px;
+}
+
+.page th {
+    padding-left: 15px;
+}
+
+.page tr:nth-of-type(even){
+    background-color: rgba(255,255,255,0.3);
 }

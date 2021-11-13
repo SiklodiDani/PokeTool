@@ -1,22 +1,21 @@
 import { React, useState, useEffect } from "react";
 import { useParams } from "react-router";
-import {Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./PokemonPage.css";
 
 const PokemonPage = () => {
 	const { id } = useParams();
 	const [pokemon, setPokemon] = useState([]);
 	const [evolution, setEvolution] = useState([]);
+	const [pokemonDescription, setPokemonDescription] = useState([]);
 	const [cards, setCards] = useState([]);
 	const [firstRender, setFirstRender] = useState(true);
 
 	const fetchPokemon = async () => {
 		//get information about the pokemon for the data displayed
-		let res = await fetch(
-			`https://pokeapi.co/api/v2/pokemon/${id}`
-		);
+		let res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
 		let data = await res.json();
-
+		
 		setPokemon(data);
 
 		const getCards = async (data) => {
@@ -36,11 +35,19 @@ const PokemonPage = () => {
 		// getCards(data);
 
 		const getEvolutionStage = async (data) => {
-
 			//gets the url for the evolution link
-			res = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${data.name}/`);
+			res = await fetch(
+				`https://pokeapi.co/api/v2/pokemon-species/${data.name}/`
+			);
 			data = await res.json();
-	
+
+			//populate an array with the description about this specific pokemon
+			data.flavor_text_entries.forEach(text => {
+				if(text.language.name === "en"){
+					setPokemonDescription(text.flavor_text);
+				}
+			});
+
 			//gets the data about the evolution stages
 			let evolutionLink = data.evolution_chain.url;
 			res = await fetch(evolutionLink);
@@ -75,7 +82,6 @@ const PokemonPage = () => {
 		};
 
 		getEvolutionStage(data);
-        
 	};
 
 	useEffect(() => {
@@ -86,12 +92,16 @@ const PokemonPage = () => {
 		<div className="page">
 			{pokemon.length !== 0 && (
 				<>
-					<div className="pokemon">
+					<div className="pokemon-data">
 						<div className="pokemon-img-container">
+							<h2>{pokemon.name[0].toUpperCase() + pokemon.name.slice(1)}</h2>
 							<img
 								src={`https://cdn.traction.one/pokedex/pokemon/${pokemon.id}.png`}
 								alt={pokemon.name}
-							/>
+								/>
+						</div>
+						<div>
+							<p>{pokemonDescription.length !== 0 && pokemonDescription}</p>
 						</div>
 						<div className="pokedex-data">
 							<h2>Pokédex data</h2>
@@ -169,20 +179,22 @@ const PokemonPage = () => {
 								</tbody>
 							</table>
 						</div>
-					</div>
-					<h2> Evolutions </h2>
-					<div className="evolutions">
-					{evolution.length > 0 &&
-						evolution.map((stage) => (
-							<div>
-								<Link to={`/page/${stage}`}>
-									<img
-										src={`https://cdn.traction.one/pokedex/pokemon/${stage}.png`}
-									/>
-								</Link>
+						<div>
+							<h2> Evolutions </h2>
+							<div className="evolutions">
+								{evolution.length > 0 &&
+									evolution.map((stage) => (
+										<div className="stage-img">
+											<Link to={`/page/${stage}`}>
+												<img
+													src={`https://cdn.traction.one/pokedex/pokemon/${stage}.png`}
+												/>
+											</Link>
+										</div>
+									))}
 							</div>
-						))}
 						</div>
+					</div>
 					{/* <div className="cards-container">
 						{cards.map((card, i) => (
 							<img src={card} key={i} alt={" "} />
