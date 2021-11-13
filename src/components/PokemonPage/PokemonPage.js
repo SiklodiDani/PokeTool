@@ -32,7 +32,7 @@ const PokemonPage = () => {
 			});
 		};
 
-		// getCards(data);
+		getCards(data);
 
 		const getEvolutionStage = async (data) => {
 			//gets the url for the evolution link
@@ -92,19 +92,19 @@ const PokemonPage = () => {
 		<div className="page">
 			{pokemon.length !== 0 && (
 				<>
+					<h1>{pokemon.name[0].toUpperCase() + pokemon.name.slice(1)}</h1>
+					<div className="description">
+						<p >{pokemonDescription.length !== 0 && pokemonDescription}</p>
+					</div>
 					<div className="pokemon-data">
 						<div className="pokemon-img-container">
-							<h2>{pokemon.name[0].toUpperCase() + pokemon.name.slice(1)}</h2>
 							<img
 								src={`https://cdn.traction.one/pokedex/pokemon/${pokemon.id}.png`}
 								alt={pokemon.name}
-								/>
-						</div>
-						<div>
-							<p>{pokemonDescription.length !== 0 && pokemonDescription}</p>
+							/>
 						</div>
 						<div className="pokedex-data">
-							<h2>Pokédex data</h2>
+							<h3>Pokédex data</h3>
 							<table>
 								<tbody>
 									<tr>
@@ -149,7 +149,7 @@ const PokemonPage = () => {
 							</table>
 						</div>
 						<div className="pokemon-stats">
-							<h2>Base stats</h2>
+							<h3>Base stats</h3>
 							<table>
 								<tbody>
 									<tr>
@@ -180,7 +180,7 @@ const PokemonPage = () => {
 							</table>
 						</div>
 						<div>
-							<h2> Evolutions </h2>
+							<h3> Evolutions </h3>
 							<div className="evolutions">
 								{evolution.length > 0 &&
 									evolution.map((stage) => (
@@ -195,11 +195,11 @@ const PokemonPage = () => {
 							</div>
 						</div>
 					</div>
-					{/* <div className="cards-container">
+					<div className="cards-container">
 						{cards.map((card, i) => (
 							<img src={card} key={i} alt={" "} />
 						))}
-					</div> */}
+					</div>
 				</>
 			)}
 		</div>

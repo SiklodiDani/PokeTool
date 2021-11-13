@@ -11,6 +11,7 @@ function PokemonList() {
 		setFilter(e.target.value);
 	}
 	
+	
 	const fetchPokemon = async () => {
 		const res = await fetch(loadMore);
 		const data = await res.json();
@@ -28,7 +29,6 @@ function PokemonList() {
 		}
 		createPokemonCard(data.results);
 	};
-
 	
 
 	useEffect(() => {

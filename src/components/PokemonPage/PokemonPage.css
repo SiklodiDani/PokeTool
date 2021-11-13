@@ -7,6 +7,16 @@
     color: rgb(48, 47, 59);
 }
 
+.page .description  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page .description p {
+    max-width: 400px;
+}
+
 .page .pokemon-data {
     display: inline-flex;
     grid-gap: 1em;
@@ -19,10 +29,6 @@
     .page .pokemon-data { flex-direction: column; }
   }
 
-.page .stats-container {
-    margin: 10px;
-}
-
 .page .pokemon-img-container {
     display: inline-block;
 }
@@ -34,11 +40,6 @@
 
 .page .info {
     display: inline-block;
-}
-
-
-.page .stats-row {
-    margin: 10px;
 }
 
 .page .stats-row span {
@@ -80,6 +81,7 @@
     border-radius: 25px;
     border-collapse: collapse;
     overflow: hidden;
+    margin-bottom: 15px;
 }
 
 .page td {
