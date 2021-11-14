@@ -9,83 +9,95 @@ const PokemonPage = () => {
 	const [evolution, setEvolution] = useState([]);
 	const [pokemonDescription, setPokemonDescription] = useState([]);
 	const [cards, setCards] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const [firstRender, setFirstRender] = useState(true);
 
 	const fetchPokemon = async () => {
 		//get information about the pokemon for the data displayed
 		let res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
 		let data = await res.json();
-		
+
 		setPokemon(data);
 
-		const getCards = async (data) => {
-			setCards([]);
+		try {
+			const getCards = async (data) => {
+				setCards([]);
 
-			//get information about the pokemon cards and populates the array with the url of the images
-			res = await fetch(
-				`https://api.pokemontcg.io/v2/cards?q=name:${data.name}&orderBy=name&sort=Asc`
-			);
-			data = await res.json();
-
-			data.data.forEach((element) => {
-				setCards((currentCard) => [...currentCard, element.images.small]);
-			});
-		};
-
-		getCards(data);
-
-		const getEvolutionStage = async (data) => {
-			//gets the url for the evolution link
-			res = await fetch(
-				`https://pokeapi.co/api/v2/pokemon-species/${data.name}/`
-			);
-			data = await res.json();
-
-			//populate an array with the description about this specific pokemon
-			data.flavor_text_entries.forEach(text => {
-				if(text.language.name === "en"){
-					setPokemonDescription(text.flavor_text);
-				}
-			});
-
-			//gets the data about the evolution stages
-			let evolutionLink = data.evolution_chain.url;
-			res = await fetch(evolutionLink);
-			data = await res.json();
-
-			if (firstRender) {
-				let stage1Id = await fetch(
-					`https://pokeapi.co/api/v2/pokemon/${data.chain.species.name}`
+				//get information about the pokemon cards and populates the array with the url of the images
+				res = await fetch(
+					`https://api.pokemontcg.io/v2/cards?q=name:${data.name}&orderBy=name&sort=Asc`
 				);
-				let IdData = await stage1Id.json();
-				let stageId = IdData.id;
+				data = await res.json();
 
-				setEvolution((currentStage) => [...currentStage, stageId]);
-				if (data.chain.evolves_to.length !== 0) {
-					stage1Id = await fetch(
-						`https://pokeapi.co/api/v2/pokemon/${data.chain.evolves_to[0].species.name}`
+				data.data.forEach((element) => {
+					setCards((currentCard) => [...currentCard, element.images.small]);
+				});
+
+				setLoading(false);
+			};
+
+			getCards(data);
+		} catch (err) {
+			console.log(err);
+		}
+
+		try {
+			const getEvolutionStage = async (data) => {
+				//gets the url for the evolution link
+				res = await fetch(
+					`https://pokeapi.co/api/v2/pokemon-species/${data.name}/`
+				);
+				data = await res.json();
+
+				//populate an array with the description about this specific pokemon
+				data.flavor_text_entries.forEach((text) => {
+					if (text.language.name === "en") {
+						setPokemonDescription(text.flavor_text);
+					}
+				});
+
+				//gets the data about the evolution stages
+				let evolutionLink = data.evolution_chain.url;
+				res = await fetch(evolutionLink);
+				data = await res.json();
+
+				if (firstRender) {
+					let stage1Id = await fetch(
+						`https://pokeapi.co/api/v2/pokemon/${data.chain.species.name}`
 					);
-					IdData = await stage1Id.json();
+					let IdData = await stage1Id.json();
+					let stageId = IdData.id;
 
-					setEvolution((currentStage) => [...currentStage, IdData.id]);
-					if (data.chain.evolves_to[0].evolves_to.length !== 0) {
+					setEvolution((currentStage) => [...currentStage, stageId]);
+					if (data.chain.evolves_to.length !== 0) {
 						stage1Id = await fetch(
-							`https://pokeapi.co/api/v2/pokemon/${data.chain.evolves_to[0].evolves_to[0].species.name}`
+							`https://pokeapi.co/api/v2/pokemon/${data.chain.evolves_to[0].species.name}`
 						);
 						IdData = await stage1Id.json();
 
 						setEvolution((currentStage) => [...currentStage, IdData.id]);
-					}
-				}
-				setFirstRender(false);
-			}
-		};
+						if (data.chain.evolves_to[0].evolves_to.length !== 0) {
+							stage1Id = await fetch(
+								`https://pokeapi.co/api/v2/pokemon/${data.chain.evolves_to[0].evolves_to[0].species.name}`
+							);
+							IdData = await stage1Id.json();
 
-		getEvolutionStage(data);
+							setEvolution((currentStage) => [...currentStage, IdData.id]);
+						}
+					}
+					setFirstRender(false);
+				}
+			};
+
+			getEvolutionStage(data);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	useEffect(() => {
 		fetchPokemon();
+		//eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [id]);
 
 	return (
@@ -94,9 +106,10 @@ const PokemonPage = () => {
 				<>
 					<h1>{pokemon.name[0].toUpperCase() + pokemon.name.slice(1)}</h1>
 					<div className="description">
-						<p >{pokemonDescription.length !== 0 && pokemonDescription}</p>
+						<p>{pokemonDescription.length !== 0 && pokemonDescription}</p>
 					</div>
 					<div className="pokemon-data">
+						<div className="img-and-stats">
 						<div className="pokemon-img-container">
 							<img
 								src={`https://cdn.traction.one/pokedex/pokemon/${pokemon.id}.png`}
@@ -140,8 +153,8 @@ const PokemonPage = () => {
 									<tr>
 										<th>Abilities</th>
 										<td>
-											{pokemon.abilities.map((ability) => (
-												<div>{ability.ability.name}</div>
+											{pokemon.abilities.map((ability, i) => (
+												<div key={i}>{ability.ability.name}</div>
 											))}
 										</td>
 									</tr>
@@ -179,15 +192,17 @@ const PokemonPage = () => {
 								</tbody>
 							</table>
 						</div>
+						</div>
 						<div>
-							<h3> Evolutions </h3>
+							<h3> Evolution stages </h3>
 							<div className="evolutions">
 								{evolution.length > 0 &&
-									evolution.map((stage) => (
-										<div className="stage-img">
+									evolution.map((stage, i) => (
+										<div key={i} className="stage-img">
 											<Link to={`/page/${stage}`}>
-												<img
+												<img onClick={() => setLoading(true)}
 													src={`https://cdn.traction.one/pokedex/pokemon/${stage}.png`}
+													alt={stage}
 												/>
 											</Link>
 										</div>
@@ -196,9 +211,11 @@ const PokemonPage = () => {
 						</div>
 					</div>
 					<div className="cards-container">
-						{cards.map((card, i) => (
-							<img src={card} key={i} alt={" "} />
-						))}
+						{loading ? (
+							<h3>loading...</h3>
+						) : (
+							cards.map((card, i) => <img src={card} key={i} alt={" "} />)
+						)}
 					</div>
 				</>
 			)}

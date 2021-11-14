@@ -23,23 +23,30 @@
 }
 
 .page .description p {
+    backdrop-filter: blur(5px);
+    border-radius: 15px;
+    padding: 10px;
     max-width: 400px;
 }
 
 .page .pokemon-data {
-    display: inline-flex;
+    display: flex;
     grid-gap: 1em;
     grid-auto-flow: row;
     align-content: center;
     align-items: center;
+    justify-content: center;
 }
 
-@media screen and ( max-width: 500px ) { 
+@media screen and ( max-width: 1200px ) { 
     .page .pokemon-data { flex-direction: column; }
   }
 
 .page .pokemon-img-container {
     display: inline-block;
+    border-radius: 50%;
+    box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.5) inset;
+    margin-right: 25px;
 }
 
 .page .pokemon-img-container img{
@@ -65,27 +72,48 @@
     display: flex;
     grid-gap: 1em;
     grid-auto-flow: row;
+    margin-left: 30px;
+    margin-bottom: 15px;
 }
 
+.page .img-and-stats {
+    display: flex;
+    grid-gap: 1em;
+    grid-auto-flow: row;
+    align-content: center;
+    align-items: center;
+}
+
+@media screen and ( max-width: 700px ) { 
+    .page .img-and-stats { flex-direction: column; margin-left: 0px;}
+
+  }
+
+.page .evolutions img {
+    height: auto;
+    width: 125px;  
+}
 @media screen and ( max-width: 500px ) { 
     .page .evolutions { flex-direction: column; }
+    .page .pokemon-img-container { margin-right: 0;}
+    .page .evolutions {margin-left: 0;}
+    .page .evolutions img {width: 150px; height: auto;}
   }
 
 .page .evolutions .stage-img {
     transition: transform 250ms; 
+    border-radius: 50%;
+    box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.5) inset;
 }
 
 .page .evolutions .stage-img:hover {
-    transform: translateY(-10px);
+    box-shadow: 0px 0px 20px rgba(255, 255, 255, 1) inset;
 }
 
-.page .evolutions img {
-    height: 100px;
-    width: auto;  
-}
 
 .page table {
-    background-color: rgba(255,255,255,0.3);
+    backdrop-filter: blur(5px);
+    box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.5);
     border-radius: 25px;
     border-collapse: collapse;
     overflow: hidden;

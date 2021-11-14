@@ -43,7 +43,7 @@ const PokemonCard = ({ id, name, image, types}) => {
 				<div
 					className="pokemon"
 					style={{
-						backgroundImage: `linear-gradient(61deg, ${colors[style0]} 49%, ${colors[style1]} 51%)`,
+						backgroundImage: `linear-gradient(61deg, ${colors[style0]} 49%, ${colors[style1]} 51%)`
 					}}
 				>
 					<div className="img-container">

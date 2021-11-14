@@ -4,35 +4,39 @@ import './PokemonList.css';
 
 function PokemonList() {
 	const [allPokemon, setAllPokemon] = useState([]);
-	const [loadMore, setLoadMore] = useState("https://pokeapi.co/api/v2/pokemon?offset=0&limit=5");
+	const [loadMore, setLoadMore] = useState("https://pokeapi.co/api/v2/pokemon?offset=0&limit=50");
 	const [filter, setFilter] = useState("");
 
 	const searchHandler = (e) => {
 		setFilter(e.target.value);
-	}
-	
-	
+	};
+
 	const fetchPokemon = async () => {
-		const res = await fetch(loadMore);
-		const data = await res.json();
-		setLoadMore(data.next);
+		try {
+			const res = await fetch(loadMore);
+			const data = await res.json();
+			setLoadMore(data.next);
 
-		function createPokemonCard(result) {
-			result.forEach(async (pokemon) => {
-				const res = await fetch(
-					`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
-				);
-				const data = await res.json();
+			function createPokemonCard(result) {
+				result.forEach(async (pokemon) => {
+					const res = await fetch(
+						`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
+					);
+					const data = await res.json();
 
-				setAllPokemon((currentPokemon) => [...currentPokemon, data]);	
-			});
+					setAllPokemon((currentPokemon) => [...currentPokemon, data]);
+				});
+			}
+			createPokemonCard(data.results);
+		} catch (err) {
+			console.log(err);
 		}
-		createPokemonCard(data.results);
 	};
 	
 
 	useEffect(() => {
 		fetchPokemon();
+		//eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
