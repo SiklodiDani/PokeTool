@@ -57,7 +57,9 @@ function PokemonList() {
 							)
 					)}
 			</div>
-			<button className="load-button" onClick={() => fetchPokemon()}>Load More</button>
+			<div className="load-button" >
+			<button onClick={() => fetchPokemon()}>Load More</button>
+			</div>
 		</div>
 	);
 }
