@@ -4,7 +4,6 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import './App.css';
 import Navbar from "./components/Navbar/Navbar.js"
 import PokemonList from "./components/PokemonList/PokemonList";
-import PokemonCard from "./components/PokemonCard/PokemonCard";
 import PokemonPage from "./components/PokemonPage/PokemonPage";
 
 function App() {
